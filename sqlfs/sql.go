@@ -9,9 +9,6 @@ import (
 	"github.com/pkg/errors"
 )
 
-// TODO(imjching): Support multiple SQL databases?
-// At the moment, SQL statements are CockroachDB/PostgreSQL specific.
-
 func CreateLink(ctx context.Context, db *sql.DB, parent uint64, n *fileNode) error {
 	tx, err := db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable})
 	if err != nil {
@@ -183,7 +180,7 @@ func RemoveNodeByName(ctx context.Context, db *sql.DB, parent uint64, name strin
 // WriteData attempts to store `data` into the contents of file with Inode
 // `inode`. This uses an inefficient implementation by deleting existing
 // contents and adding them back again. We can definitely improve this
-// if we were to focus on Offset and size, but I'll skip that for now.
+// if we were to focus on Offset and Size, but I'll skip that for now.
 func WriteData(ctx context.Context, db *sql.DB, n *fileNode, data []byte) error {
 	tx, err := db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable})
 	if err != nil {

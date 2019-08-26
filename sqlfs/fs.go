@@ -19,8 +19,10 @@ type fileSystem struct {
 }
 
 const (
-	rootInode  = 1
-	BLOCK_SIZE = 5
+	rootInode = 1
+
+	// Note that reading or writing will become slower is block size is smaller.
+	BLOCK_SIZE = 1024
 )
 
 // Error types:
@@ -562,8 +564,6 @@ func (n *fileNode) Read(ctx context.Context, req *fuse.ReadRequest, resp *fuse.R
 // (as seen through Attr). Note that file size changes are
 // communicated also through Setattr.
 // Write implements the fuseFS.HandleWriter interface.
-// TODO(imjching): Fix a bug in which `echo "X" > file.txt` does not
-// reset the file contents.
 func (n *fileNode) Write(ctx context.Context, req *fuse.WriteRequest, resp *fuse.WriteResponse) error {
 	// We will attempt to write everything here.
 	err := WriteData(ctx, n.fs.db, n, req.Data)

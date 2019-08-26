@@ -68,7 +68,6 @@ func main() {
 			}
 		}
 	}()
-
 	fmt.Printf("FUSE Protocol: %s\n", c.Protocol())
 
 	err = fs.Serve(c, fileSystem{db: db})

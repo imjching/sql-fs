@@ -1,8 +1,4 @@
-CREATE USER roacher;
-
---
--- Create necessary objects.
---
+CREATE USER IF NOT EXISTS roacher;
 CREATE DATABASE IF NOT EXISTS sqlfs;
 CREATE SEQUENCE IF NOT EXISTS sqlfs.inode_seq START 2;
 
